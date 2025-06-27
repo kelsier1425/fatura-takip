@@ -199,7 +199,10 @@
             console.log(`${key}: ${value}`);
         }
         
-        const token = urlParams.get('token') || urlParams.get('access_token') || urlParams.get('confirmation_token');
+        const token = urlParams.get('token') || 
+                      urlParams.get('access_token') || 
+                      urlParams.get('confirmation_token') ||
+                      urlParams.get('token_hash');
         const type = urlParams.get('type') || 'signup';
         
         console.log('Token:', token);
