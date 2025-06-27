@@ -67,12 +67,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
     });
   }
   
-  void _handleAuthStateChange(Session session) {
+  void _handleAuthStateChange(Session session) async {
     final userMetadata = session.user.userMetadata;
-    final user = UserEntity(
+    
+    // First set basic auth state
+    final basicUser = UserEntity(
       id: session.user.id,
       email: session.user.email ?? '',
-      name: userMetadata?['name'] ?? session.user.email?.split('@').first ?? 'User',
+      name: userMetadata?['name'] ?? 'User',
       isPremium: false,
       subscriptionType: null,
       subscriptionEndDate: null,
@@ -83,9 +85,42 @@ class AuthNotifier extends StateNotifier<AuthState> {
     
     state = AuthState(
       status: AuthStatus.authenticated,
-      user: user,
+      user: basicUser,
       isGuest: false,
     );
+    
+    // Then fetch user profile from database
+    try {
+      final profileResponse = await _supabase
+          .from('profiles')
+          .select()
+          .eq('user_id', session.user.id)
+          .single();
+          
+      if (profileResponse != null) {
+        final updatedUser = UserEntity(
+          id: session.user.id,
+          email: session.user.email ?? '',
+          name: profileResponse['name'] ?? userMetadata?['name'] ?? session.user.email?.split('@').first ?? 'User',
+          isPremium: profileResponse['is_premium'] ?? false,
+          subscriptionType: profileResponse['subscription_type'],
+          subscriptionEndDate: profileResponse['subscription_end_date'] != null 
+              ? DateTime.parse(profileResponse['subscription_end_date']) 
+              : null,
+          photoUrl: profileResponse['photo_url'] ?? userMetadata?['avatar_url'],
+          createdAt: DateTime.parse(session.user.createdAt),
+          lastLoginAt: DateTime.now(),
+        );
+        
+        state = AuthState(
+          status: AuthStatus.authenticated,
+          user: updatedUser,
+          isGuest: false,
+        );
+      }
+    } catch (e) {
+      print('🔥 Error fetching user profile: $e');
+    }
   }
 
   Future<void> login(String email, String password) async {

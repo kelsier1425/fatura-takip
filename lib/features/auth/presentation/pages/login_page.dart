@@ -40,6 +40,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
+    print('🔥 Login attempt for: ${_emailController.text}');
+    
     final authNotifier = ref.read(authProvider.notifier);
     
     try {
@@ -131,6 +133,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final theme = Theme.of(context);
     final authState = ref.watch(authProvider);
     final isLoading = authState.status == AuthStatus.loading;
+    
+    // Listen for auth state changes
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      print('🔥 Auth state changed: ${previous?.status} -> ${next.status}');
+      if (next.status == AuthStatus.authenticated && mounted) {
+        context.go('/home');
+      }
+    });
     
     return LoadingOverlay(
       isLoading: isLoading,

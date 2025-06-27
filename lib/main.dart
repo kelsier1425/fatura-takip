@@ -21,13 +21,6 @@ void main() async {
   // Initialize Supabase
   await SupabaseConfig.initialize();
   
-  // Clear any existing session for clean start (temporary fix)
-  try {
-    await SupabaseConfig.client.auth.signOut();
-  } catch (e) {
-    // Ignore errors
-  }
-  
   runApp(
     const ProviderScope(
       child: FaturaTakipApp(),
