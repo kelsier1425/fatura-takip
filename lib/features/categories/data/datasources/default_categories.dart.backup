@@ -1,0 +1,670 @@
+import 'package:flutter/material.dart';
+import '../../domain/entities/category_entity.dart';
+import '../../../../core/constants/app_colors.dart';
+
+class DefaultCategories {
+  // Sabit ID'ler - Her çalıştırmada aynı olmalı
+  static const String personalId = 'personal_001';
+  static const String childId = 'child_001';
+  static const String petId = 'pet_001';
+  static const String subscriptionId = 'subscription_001';
+  static const String homeId = 'home_001';
+  static const String foodId = 'food_001';
+  static const String professionalId = 'professional_001';
+  static const String healthId = 'health_001';
+  
+  static List<CategoryEntity> getDefaultCategories() {
+    final now = DateTime.now();
+    
+    return [
+      // Ana Kategoriler
+      
+      // 1. Kişisel Kategorisi
+      CategoryEntity(
+        id: personalId,
+        name: 'Kişisel',
+        description: 'Kişisel harcamalar ve ihtiyaçlar',
+        type: CategoryType.personal,
+        color: AppColors.categoryPersonal,
+        icon: Icons.person_outline,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      
+      // 2. Çocuk Kategorisi
+      CategoryEntity(
+        id: childId,
+        name: 'Çocuk',
+        description: 'Çocuk ile ilgili tüm giderler',
+        type: CategoryType.child,
+        color: AppColors.categoryChild,
+        icon: Icons.child_care_outlined,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      
+      // 3. Evcil Hayvan Kategorisi
+      CategoryEntity(
+        id: petId,
+        name: 'Evcil Hayvan',
+        description: 'Pet ile ilgili giderler',
+        type: CategoryType.pet,
+        color: AppColors.categoryPet,
+        icon: Icons.pets_outlined,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      
+      // 4. Abonelik Kategorisi
+      CategoryEntity(
+        id: subscriptionId,
+        name: 'Abonelik',
+        description: 'Aylık ve yıllık abonelikler',
+        type: CategoryType.subscription,
+        color: AppColors.categorySubscription,
+        icon: Icons.subscriptions_outlined,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      
+      // 5. Ev Gideri Kategorisi
+      CategoryEntity(
+        id: homeId,
+        name: 'Ev Gideri',
+        description: 'Ev ile ilgili tüm harcamalar',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.home_outlined,
+        createdAt: now,
+        sortOrder: 5,
+      ),
+      
+      // 6. Gıda Kategorisi
+      CategoryEntity(
+        id: foodId,
+        name: 'Gıda',
+        description: 'Yemek ve market harcamaları',
+        type: CategoryType.food,
+        color: AppColors.categoryFood,
+        icon: Icons.restaurant_outlined,
+        createdAt: now,
+        sortOrder: 6,
+      ),
+      
+      // 7. Profesyonel Araçlar Kategorisi
+      CategoryEntity(
+        id: professionalId,
+        name: 'Profesyonel Araçlar',
+        description: 'İş ve üretkenlik araçları',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.work_outline,
+        createdAt: now,
+        sortOrder: 7,
+      ),
+      
+      // 8. Sağlık & Wellness Kategorisi
+      CategoryEntity(
+        id: healthId,
+        name: 'Sağlık & Wellness',
+        description: 'Sağlık, fitness ve mental wellness',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.favorite_outline,
+        createdAt: now,
+        sortOrder: 8,
+      ),
+    ];
+  }
+  
+  static List<CategoryEntity> getDefaultSubcategories() {
+    final now = DateTime.now();
+    // Sabit ID'leri kullanıyoruz, artık arama yapmaya gerek yok
+    
+    int idCounter = 1;
+    String generateId(String category) => '${category}_sub_${idCounter.toString().padLeft(3, '0')}';
+    
+    return [
+      // Kişisel Alt Kategorileri
+      CategoryEntity(
+        id: 'personal_sub_001',
+        name: 'Sağlık',
+        type: CategoryType.personal,
+        color: AppColors.categoryPersonal,
+        icon: Icons.medical_services_outlined,
+        parentId: personalId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Giyim',
+        type: CategoryType.personal,
+        color: AppColors.categoryPersonal,
+        icon: Icons.checkroom_outlined,
+        parentId: personalId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Ulaşım',
+        type: CategoryType.personal,
+        color: AppColors.categoryPersonal,
+        icon: Icons.directions_car_outlined,
+        parentId: personalId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Eğlence',
+        type: CategoryType.personal,
+        color: AppColors.categoryPersonal,
+        icon: Icons.movie_outlined,
+        parentId: personalId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      
+      // Çocuk Alt Kategorileri
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Eğitim',
+        type: CategoryType.child,
+        color: AppColors.categoryChild,
+        icon: Icons.school_outlined,
+        parentId: childId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Etkinlik',
+        type: CategoryType.child,
+        color: AppColors.categoryChild,
+        icon: Icons.sports_soccer_outlined,
+        parentId: childId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Sağlık',
+        type: CategoryType.child,
+        color: AppColors.categoryChild,
+        icon: Icons.healing_outlined,
+        parentId: childId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Psikolojik Destek',
+        type: CategoryType.child,
+        color: AppColors.categoryChild,
+        icon: Icons.psychology_outlined,
+        parentId: childId,
+        createdAt: now,
+        sortOrder: 4,
+        isPremium: true,
+      ),
+      
+      // Evcil Hayvan Alt Kategorileri
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Mama',
+        type: CategoryType.pet,
+        color: AppColors.categoryPet,
+        icon: Icons.food_bank_outlined,
+        parentId: petId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Veteriner',
+        type: CategoryType.pet,
+        color: AppColors.categoryPet,
+        icon: Icons.local_hospital_outlined,
+        parentId: petId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Aksesuar',
+        type: CategoryType.pet,
+        color: AppColors.categoryPet,
+        icon: Icons.favorite_outline,
+        parentId: petId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      
+      // Abonelik Alt Kategorileri
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Streaming',
+        type: CategoryType.subscription,
+        color: AppColors.categorySubscription,
+        icon: Icons.play_circle_outline,
+        parentId: subscriptionId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Müzik',
+        type: CategoryType.subscription,
+        color: AppColors.categorySubscription,
+        icon: Icons.music_note_outlined,
+        parentId: subscriptionId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Yazılım',
+        type: CategoryType.subscription,
+        color: AppColors.categorySubscription,
+        icon: Icons.computer_outlined,
+        parentId: subscriptionId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Fitness',
+        type: CategoryType.subscription,
+        color: AppColors.categorySubscription,
+        icon: Icons.fitness_center_outlined,
+        parentId: subscriptionId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      
+      // Ev Gideri Alt Kategorileri
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Kira',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.key_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Elektrik',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.electrical_services_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Su',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.water_drop_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Doğalgaz',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.local_fire_department_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'İnternet',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.wifi_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 5,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Temizlik',
+        type: CategoryType.home,
+        color: AppColors.categoryHome,
+        icon: Icons.cleaning_services_outlined,
+        parentId: homeId,
+        createdAt: now,
+        sortOrder: 6,
+      ),
+      
+      // Gıda Alt Kategorileri
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Market',
+        type: CategoryType.food,
+        color: AppColors.categoryFood,
+        icon: Icons.shopping_cart_outlined,
+        parentId: foodId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Restoran',
+        type: CategoryType.food,
+        color: AppColors.categoryFood,
+        icon: Icons.restaurant_menu_outlined,
+        parentId: foodId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Kahve',
+        type: CategoryType.food,
+        color: AppColors.categoryFood,
+        icon: Icons.local_cafe_outlined,
+        parentId: foodId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Online Sipariş',
+        type: CategoryType.food,
+        color: AppColors.categoryFood,
+        icon: Icons.delivery_dining_outlined,
+        parentId: foodId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      
+      // Profesyonel Araçlar Alt Kategorileri
+      
+      // A) Tasarım & Yaratıcılık
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Adobe Creative Cloud',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.palette_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Figma Professional',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.design_services_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Canva Pro',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.image_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Sketch',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.draw_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      
+      // B) Ofis & Productivity
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Microsoft 365',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.business_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 5,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Google Workspace',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.cloud_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 6,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Notion Pro',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.note_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 7,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Slack Premium',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.chat_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 8,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Zoom Pro',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.video_call_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 9,
+      ),
+      
+      // C) Geliştirici Araçları
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'GitHub Pro',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.code_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 10,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'JetBrains IDE',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.terminal_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 11,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Heroku',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.cloud_upload_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 12,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'MongoDB Atlas',
+        type: CategoryType.professional,
+        color: AppColors.categoryProfessional,
+        icon: Icons.storage_outlined,
+        parentId: professionalId,
+        createdAt: now,
+        sortOrder: 13,
+      ),
+      
+      // Sağlık & Wellness Alt Kategorileri
+      
+      // A) Fitness & Spor
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Gym Üyeliği',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.fitness_center_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 1,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Personal Trainer',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.sports_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 2,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Nike Training',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.directions_run_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 3,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Peloton',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.directions_bike_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 4,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Yoga Apps',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.self_improvement_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 5,
+      ),
+      
+      // B) Mental Health
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Headspace',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.psychology_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 6,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Calm',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.spa_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 7,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'BetterHelp',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.support_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 8,
+        isPremium: true,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Talkspace',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.forum_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 9,
+        isPremium: true,
+      ),
+      
+      // C) Beslenme & Diyet
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'MyFitnessPal Premium',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.restaurant_menu_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 10,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Vitamin & Supplements',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.medical_services_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 11,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Dietitian Danışmanlığı',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.person_outline,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 12,
+      ),
+      CategoryEntity(
+        id: _uuid.v4(),
+        name: 'Meal Planning',
+        type: CategoryType.health,
+        color: AppColors.categoryHealth,
+        icon: Icons.schedule_outlined,
+        parentId: healthId,
+        createdAt: now,
+        sortOrder: 13,
+      ),
+    ];
+  }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatura Takip</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        h1 { color: #2d3748; margin-bottom: 16px; }
+        p { color: #4a5568; line-height: 1.6; margin-bottom: 20px; }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="error-state">
+            <div class="error-icon">⚠️</div>
+            <h1>Email Link Süresi Doldu</h1>
+            <p>Email doğrulama linkinin süresi dolmuş. Lütfen uygulamaya giriş yapın ve yeni bir doğrulama emaili isteyin.</p>
+            <a href="web/index.html" class="button">Uygulamayı Aç</a>
+        </div>
+        
+        <div id="success-state" style="display: none;">
+            <div class="success-icon">✓</div>
+            <h1>Email Doğrulandı!</h1>
+            <p>Hesabınız başarıyla doğrulandı. Uygulamayı açabilirsiniz.</p>
+            <a href="web/index.html" class="button">Uygulamayı Aç</a>
+        </div>
+    </div>
+
+    <script>
+        // URL parametrelerini kontrol et
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const errorCode = urlParams.get('error_code');
+        
+        // Hash'teki parametreleri de kontrol et
+        const hash = window.location.hash.substring(1);
+        const hashParams = new URLSearchParams(hash);
+        const hashError = hashParams.get('error');
+        
+        console.log('URL Error:', error || hashError);
+        console.log('Error Code:', errorCode || hashParams.get('error_code'));
+        
+        // Eğer success parametresi varsa success göster
+        if (urlParams.get('success') === 'true') {
+            document.getElementById('error-state').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+        }
+        
+        // 3 saniye sonra otomatik yönlendirme
+        setTimeout(() => {
+            window.location.href = 'web/index.html';
+        }, 5000);
+    </script>
+</body>
+</html>
