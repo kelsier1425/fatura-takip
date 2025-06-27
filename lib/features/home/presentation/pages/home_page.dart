@@ -78,7 +78,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         const SizedBox(height: 8),
                         Text(
                           isAuthenticated && currentUser != null 
-                              ? currentUser.name
+                              ? (currentUser.name ?? currentUser.email)
                               : 'Misafir Kullanıcı',
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: Colors.white.withOpacity(0.9),
@@ -95,26 +95,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                             child: const Text('Giriş Yap'),
                           )
                         else
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ElevatedButton.icon(
                                 onPressed: () => context.push('/expense/add'),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
                                   foregroundColor: AppColors.primary,
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                 ),
-                                icon: const Icon(Icons.add, size: 20),
-                                label: const Text('Harcama Ekle'),
+                                icon: const Icon(Icons.add, size: 18),
+                                label: const Text('Harcama Ekle', style: TextStyle(fontSize: 14)),
                               ),
-                              const SizedBox(width: 8),
-                              if (currentUser?.isPremium != true)
+                              if (currentUser?.isPremium != true) ...[
+                                const SizedBox(height: 8),
                                 TextButton(
                                   onPressed: () => context.go('/subscription'),
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.zero,
+                                    minimumSize: Size.zero,
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                   ),
-                                  child: const Text('Premium\'a Geç'),
+                                  child: const Text('Premium\'a Geç', style: TextStyle(fontSize: 13)),
                                 ),
+                              ],
                             ],
                           ),
                       ],

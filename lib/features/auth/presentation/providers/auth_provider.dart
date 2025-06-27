@@ -94,7 +94,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final profileResponse = await _supabase
           .from('profiles')
           .select()
-          .eq('user_id', session.user.id)
+          .eq('id', session.user.id)
           .single();
           
       if (profileResponse != null) {
