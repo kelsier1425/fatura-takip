@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,6 +24,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final authState = ref.watch(authProvider);
+    final currentUser = ref.watch(currentUserProvider);
+    final isAuthenticated = authState.status == AuthStatus.authenticated;
+    final isGuest = authState.isGuest;
 
     return Scaffold(
       appBar: AppBar(
@@ -72,20 +77,46 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Misafir Kullanıcı',
+                          isAuthenticated && currentUser != null 
+                              ? currentUser.name
+                              : 'Misafir Kullanıcı',
                           style: theme.textTheme.bodyLarge?.copyWith(
                             color: Colors.white.withOpacity(0.9),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () => context.go('/login'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: AppColors.primary,
+                        if (!isAuthenticated || isGuest)
+                          ElevatedButton(
+                            onPressed: () => context.go('/login'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: AppColors.primary,
+                            ),
+                            child: const Text('Giriş Yap'),
+                          )
+                        else
+                          Row(
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () => context.push('/expense/add'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppColors.primary,
+                                ),
+                                icon: const Icon(Icons.add, size: 20),
+                                label: const Text('Harcama Ekle'),
+                              ),
+                              const SizedBox(width: 8),
+                              if (currentUser?.isPremium != true)
+                                TextButton(
+                                  onPressed: () => context.go('/subscription'),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  child: const Text('Premium\'a Geç'),
+                                ),
+                            ],
                           ),
-                          child: const Text('Giriş Yap'),
-                        ),
                       ],
                     ),
                   ),
